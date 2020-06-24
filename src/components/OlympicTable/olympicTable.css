@@ -1,0 +1,25 @@
+
+.olympic-table {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.header, .row {
+    display: flex;
+}
+
+.header div, .row div {
+    flex: 1;
+    padding: 0.2rem 0.4em;
+    border: 1px solid #A2A9B1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.olympic-entries input{
+    margin-right: 10px;
+    margin-left: 5px;
+}
+

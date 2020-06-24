@@ -1,0 +1,10 @@
+.row img{
+  margin-right: 5px;
+}
+.row .country-name {
+  margin-right: 5px;
+}
+
+.row .delete {
+  cursor: pointer;
+}
