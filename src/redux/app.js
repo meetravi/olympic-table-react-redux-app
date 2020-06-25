@@ -6,19 +6,73 @@ import types from './../action/types';
 
 export const initialState = {
   countries: [
-    { countryName: 'United States',  countryCode: 'US', gold: 46, silver: 37, bronze: 38, total: 121 },
-    { countryName: 'Great Britain',  countryCode: 'GB', gold: 27, silver: 23, bronze: 17, total: 67 },
-    { countryName: 'China',  countryCode: 'CN', gold: 23, silver: 18, bronze: 26, total: 67 },
-    { countryName: 'Russia',  countryCode: 'RU', gold: 19, silver: 17, bronze: 19, total: 55 },
-    { countryName: 'Germany',  countryCode: 'DE', gold: 17, silver: 10, bronze: 15, total: 42 },
-    { countryName: 'Japan',  countryCode: 'JP', gold: 12, silver: 8, bronze: 21, total: 41 },
-    { countryName: 'France',  countryCode: 'FR', gold: 10, silver: 18, bronze: 14, total: 42 },
+    {
+      countryName: 'United States',
+      countryCode: 'US',
+      gold: 46,
+      silver: 37,
+      bronze: 38,
+      total: 121,
+    },
+    {
+      countryName: 'Great Britain',
+      countryCode: 'GB',
+      gold: 27,
+      silver: 23,
+      bronze: 17,
+      total: 67,
+    },
+    {
+      countryName: 'China',
+      countryCode: 'CN',
+      gold: 23,
+      silver: 18,
+      bronze: 26,
+      total: 67,
+    },
+    {
+      countryName: 'Russia',
+      countryCode: 'RU',
+      gold: 19,
+      silver: 17,
+      bronze: 19,
+      total: 55,
+    },
+    {
+      countryName: 'Germany',
+      countryCode: 'DE',
+      gold: 17,
+      silver: 10,
+      bronze: 15,
+      total: 42,
+    },
+    {
+      countryName: 'Japan',
+      countryCode: 'JP',
+      gold: 12,
+      silver: 8,
+      bronze: 21,
+      total: 41,
+    },
+    {
+      countryName: 'France',
+      countryCode: 'FR',
+      gold: 10,
+      silver: 18,
+      bronze: 14,
+      total: 42,
+    },
   ],
 };
 
-const compareBy = (key) => (a, b) => {
-  if (a[key] < b[key]) return 1;
-  if (a[key] > b[key]) return -1;
+const compareBy = (key, isAscending = true) => (a, b) => {
+  if (isAscending) {
+    if (a[key] < b[key]) return 1;
+    if (a[key] > b[key]) return -1;
+  } else {
+    if (a[key] > b[key]) return 1;
+    if (a[key] < b[key]) return -1;
+  }
   return 0;
 };
 /**
@@ -33,17 +87,21 @@ const app = (state = initialState, action) => {
     case types.ADD_ROW:
       const newItem = action.data;
       return {
-        countries: [...state.countries, newItem]
-      }
+        countries: [...state.countries, newItem],
+      };
     case types.SORT_BY:
       let arrayCopy = [...state.countries];
-      arrayCopy.sort(compareBy(action.data));
-      return {countries: arrayCopy};
+      arrayCopy.sort(
+        compareBy(action.data.headerType, action.data.isAscending),
+      );
+      return { countries: arrayCopy };
     case types.DELETE_ROW:
-      const countries = state.countries.filter(item => item.countryName !== action.data)
+      const countries = state.countries.filter(
+        (item) => item.countryName !== action.data,
+      );
       return {
-        countries
-      }
+        countries,
+      };
     default:
       return state;
   }

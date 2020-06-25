@@ -6,6 +6,15 @@ import './olympicTable.css';
 import { sortBy, addRow, deleteRow } from '../../action/creators';
 
 export class OlympicTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addRow = this.addRow.bind(this);
+    this.sortByHandler = this.sortByHandler.bind(this);
+    this.state = {
+      isAscending: true,
+    };
+  }
+
   addRow = () => {
     const countryName = this.refs.countryName.value;
     const countryCode = this.refs.countryCode.value;
@@ -25,8 +34,13 @@ export class OlympicTable extends React.Component {
     });
   };
 
+  sortByHandler = (data) => {
+    this.setState({ isAscending: !this.state.isAscending });
+    const sortByData = { ...data, isAscending: this.state.isAscending };
+    return this.props.sortBy(sortByData);
+  };
   render() {
-    const { countries, sortBy, deleteRow } = this.props;
+    const { countries, deleteRow } = this.props;
     return (
       <div>
         <div className="olympic-entries">
@@ -48,8 +62,8 @@ export class OlympicTable extends React.Component {
           <button onClick={() => this.addRow()}>Add</button>
         </div>
         <div className="olympic-table">
-          <p>Click on the header to sort descending</p>
-          <Header sortBy={sortBy} />
+          <p>Click on the header to sort ascending/descending</p>
+          <Header sortBy={this.sortByHandler} />
           <Row countries={countries} deleteRow={deleteRow} />
         </div>
       </div>
@@ -64,7 +78,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   addRow: (data) => dispatch(addRow(data)),
   deleteRow: (data) => dispatch(deleteRow(data)),
-  sortBy: (key) => dispatch(sortBy(key)),
+  sortBy: (data) => dispatch(sortBy(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OlympicTable);
