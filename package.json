@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "ajv": "6.12.2",
+    "ajv": "6.12.3",
     "chai": "^4.2.0",
     "classnames": "2.2.6",
     "enzyme": "3.11.0",
